@@ -1,0 +1,63 @@
+---
+title: "Heart Disease Mortality Data Among US Adults"
+author: "Zihan(Teddy)Guo"
+date: "2025-09-30"
+output: html_document
+params:
+  production: TRUE
+---
+
+```{r, set-chunk-opts, echo = FALSE, eval = params$production}
+library(knitr)
+library(here)
+library(gtsummary)
+library(ggplot2)
+library(readr)
+opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+```
+
+# Introduction
+
+Cardiovascular disease remains the leading cause of death in the United States, and heart disease mortality poses a significant burden across diverse populations. To better understand the distribution of this health outcome, the Centers for Disease Control and Prevention (CDC) provides the Heart Disease Mortality Data Among U.S. Adults (35+) by State, Territory, and County, 2018–2020. This dataset contains age-adjusted, spatially smoothed three-year average mortality rates per 100,000 population. The data are stratified by demographic factors such as sex and race/ethnicity, and reported at multiple geographic levels including county, state, and national aggregates.The objective of this analysis is to describe the distribution of heart disease mortality across demographic and geographic groups, to assess whether mortality rates differ significantly by race/ethnicity, sex, and location, to examine  the patterns, and to explore modeling approaches that identify factors associated with elevated mortality risk.
+
+# Descriptive Analysis 
+
+## Table Analysis
+
+Characteristics of the `r nrow(data)`  from the cdc database are displayed
+in the table below.This table summarizes the distribution of heart disease mortality among U.S. adults aged 35 years and older from 2018 to 2020, stratified by race/ethnicity and geographic level. Participants were divided into two groups based on whether their mortality rate (Data_Value) was above or below the overall median value (High vs. Low).
+
+```{r, table_one}
+table_one <- readRDS(here::here("output/table_one.rds"))
+table_one
+```
+
+* Table 1 summarizes the distribution of heart disease mortality rates among U.S. adults aged 35 years and older from 2018–2020, stratified by race/ethnicity and geographic level. Individuals were classified into “High” versus “Low” mortality groups based on whether their mortality rate was above or below the median. 
+* Significant differences were observed across race/ethnicity (p < 0.001). 
+* White adults had the highest proportion in the high mortality group (33%), while black adults were more likely to fall in the low mortality group (14%). 
+* By geographic level, most of the data were reported at the county level (97%), with relatively few entries at the state or national levels. These findings suggest disparities in mortality burden by race/ethnicity and highlight the predominance of county-level reporting in the dataset.
+
+
+## Graphical analysis
+
+Below is the bar chart figure. This figure indicates Average age-adjusted heart disease mortality rates per 100,000 population from 2018–2020, stratified by sex. Mortality was higher among males compared to females, while the overall group reflects the combined population average.
+
+```{r,fig.align='center'}
+knitr::include_graphics(here::here("output/figure2_plot.png"))
+```
+
+* Average age-adjusted heart disease mortality rates per 100,000 population from 2018–2020, stratified by sex. The results indicate that males experienced substantially higher mortality rates compared to females, while the overall estimate represents the combined population average. The error bars reflect standard errors around the mean estimates.
+
+
+## Regression Model Analysis
+
+This table presents the results of logistic regression models examining the association between sex, race/ethnicity, and heart disease mortality. Female and American Indian/Alaskan Native groups were used as the reference categories.
+
+```{r, figure2}
+model_logit <- readRDS(here::here("output/model_table.rds"))
+model_logit
+```
+
+* Odds ratios (OR) and 95% confidence intervals for heart disease mortality among U.S. adults aged 35 years and older, stratified by sex and race/ethnicity. 
+* Compared with females, males had significantly higher odds of heart disease mortality (OR = 26.4, 95% CI: 24.3–28.7, p < 0.001). 
+* Among racial/ethnic groups, Black adults showed elevated odds (OR = 4.66, 95% CI: 4.07–5.34), while Asian and Pacific Islander (OR = 0.01, 95% CI: 0.01–0.02) and Hispanic adults (OR = 0.05, 95% CI: 0.04–0.06) had lower odds relative to American Indian and Alaskan Native adults, the reference group.
