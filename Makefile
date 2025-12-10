@@ -20,6 +20,7 @@ docker-build:
 	docker buildx build --platform linux/amd64,linux/arm64 \
 		-t teddyyylalala/data550_final:latest .
 
+
 docker-report:
 	docker run -v "$$(pwd)/final_report":/home/rstudio/project/final_report \
 		teddyyylalala/data550_final

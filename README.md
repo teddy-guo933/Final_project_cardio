@@ -17,6 +17,8 @@ by sex, and to use a regression model to identify factors assocaited with mortal
 * Descriptive Statistics
 * Mortality by sex
 * Regression model
+* Renv
+* Dockerfile
 
 # Report Description--Final_report.html
 
@@ -71,9 +73,6 @@ by sex, and to use a regression model to identify factors assocaited with mortal
 * The report can be built by running the Makefile target docker-report.
 * The `final_report` folder will be created automatically if it does not already exist
 
-## Build the report (Mac)
+## Build the report (Mac--supported ARM64 (Apple Silicon M-series) and AMD64 the older Intel/AMD standard)
 * From your local computer, run `make docker-report`
 * Output the final HTML report to `final_report/final_report.html`
-
-
-
